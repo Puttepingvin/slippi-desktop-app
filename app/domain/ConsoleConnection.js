@@ -205,7 +205,7 @@ export default class ConsoleConnection {
         this.connectionStatus = ConnectionStatus.CONNECTED;
         this.connectionsByPort.forEach((connection) => {
           // Prevent reconnections and disconnect
-          connection.reconnect = false;
+          connection.reconnect = false; // eslint-disable-line
           connection.disconnect();
         });
         this.clientsByPort.forEach((client) => {
@@ -273,7 +273,7 @@ export default class ConsoleConnection {
         if (iPort === port) {
           return;
         }
-        iConn.reconnect = false;
+        iConn.reconnect = false; // eslint-disable-line
         iConn.disconnect();
       });
       this.connectionsByPort.forEach((iClient, iPort) => {
@@ -281,8 +281,10 @@ export default class ConsoleConnection {
           return;
         }
         // Probably not necessary since clients are created only after succesful connection
-        iClient.destroy();
+        iClient.destroy(); 
       });
+      this.peer.destroy();
+
       this.clientsByPort[port] = client;
 
       // Prepare console communication obj for talking UBJSON
